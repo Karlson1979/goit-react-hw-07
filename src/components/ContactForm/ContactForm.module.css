@@ -1,0 +1,53 @@
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    /* margin: 0 auto; */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  
+  .form label {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+ 
+  .form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  /* Стили для кнопки отправки */
+  .form button {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  
+  .form button:hover {
+    background-color: #0056b3;
+  }
+  
+.error {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.25em;
+}
+
+  
+  
