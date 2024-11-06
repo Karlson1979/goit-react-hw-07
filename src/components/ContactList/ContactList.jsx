@@ -26,7 +26,6 @@ const ContactList = () => {
 
   return (
     <div>
-      {/* Если загрузка активна, показываем компонент Loader */}
       {loading && (
         <div
           style={{
@@ -39,15 +38,6 @@ const ContactList = () => {
         </div>
       )}
 
-      {/* Если есть ошибка, показываем сообщение об ошибке */}
-      {error && (
-        <p>
-          Oops, some error occurred: &quot;{error}&quot;. Please, try again
-          later 🤷‍♂️.
-        </p>
-      )}
-
-      {/* Если загрузка завершена и ошибок нет, показываем отфильтрованные контакты */}
       {!loading && !error && filteredContacts.length > 0
         ? filteredContacts.map((contact) => (
             <Contact
@@ -58,7 +48,13 @@ const ContactList = () => {
               deleteContact={handleDeleteContact}
             />
           ))
-        : !loading && !error && <p>Контакты не найдены</p>}
+        : !loading &&
+          !error && (
+            <p>
+              Oops, some error occurred: &quot;{error}&quot;. Please, try again
+              later 🤷‍♂️.
+            </p>
+          )}
     </div>
   );
 };
