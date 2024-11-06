@@ -4,9 +4,11 @@ import { useId } from "react";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
+import { apiAddContact } from "../../redux/contactsOps"; // Импортируйте apiAddContact
 
 const ContactForm = () => {
   const dispatch = useDispatch();
+
   const validationSchema = Yup.object().shape({
     nameUser: Yup.string()
       .min(3, "Слишком короткое имя!")
@@ -28,7 +30,8 @@ const ContactForm = () => {
       id: nanoid(),
     };
 
-    dispatch({ type: "contacts/addContact", payload: contact });
+    // Используйте apiAddContact для отправки контакта
+    dispatch(apiAddContact(contact));
 
     actions.resetForm();
   };

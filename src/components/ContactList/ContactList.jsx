@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
+import { apiDeleteContact } from "../../redux/contactsOps";
+import { selectFilter } from "../../redux/filterSlice";
 import {
-  deleteContact,
   selectContacts,
   selectError,
   selectLoading,
 } from "../../redux/contactsSlice";
-import { selectFilter } from "../../redux/filterSlice";
 import Contact from "../Contact/Contact";
 import Loader from "../Loader";
 
@@ -16,16 +16,19 @@ const ContactList = () => {
   const error = useSelector(selectError);
   const dispatch = useDispatch();
 
+  // Фильтрация контактов на основе введенного фильтра
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
+  // Функция для удаления контакта
   const handleDeleteContact = (contactId) => {
-    dispatch(deleteContact(contactId));
+    dispatch(apiDeleteContact(contactId));
   };
 
   return (
     <div>
+      {/* Лоадер отображается во время загрузки */}
       {loading && (
         <div
           style={{
@@ -38,6 +41,15 @@ const ContactList = () => {
         </div>
       )}
 
+      {/* Сообщение об ошибке */}
+      {error && (
+        <p>
+          Oops, some error occurred: &quot;{error}&quot;. Please, try again
+          later 🤷‍♂️.
+        </p>
+      )}
+
+      {/* Отображение отфильтрованных контактов или сообщение, если их нет */}
       {!loading && !error && filteredContacts.length > 0
         ? filteredContacts.map((contact) => (
             <Contact
@@ -48,13 +60,7 @@ const ContactList = () => {
               deleteContact={handleDeleteContact}
             />
           ))
-        : !loading &&
-          !error && (
-            <p>
-              Oops, some error occurred: &quot;{error}&quot;. Please, try again
-              later 🤷‍♂️.
-            </p>
-          )}
+        : !loading && !error && <p>Контакты не найдены</p>}
     </div>
   );
 };
