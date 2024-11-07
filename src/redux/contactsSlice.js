@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect"; // Импортируем createSelector
 import { apiGetContacts, apiAddContact, apiDeleteContact } from "./contactsOps";
+import { selectFilter } from "./filterSlice"; // Импортируем селектор фильтра
 
-// Создаем слайс для управления состоянием контактов
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: {
@@ -11,7 +12,6 @@ const contactsSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      // Обработка apiGetContacts
       .addCase(apiGetContacts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -24,7 +24,6 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Обработка apiAddContact
       .addCase(apiAddContact.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -37,7 +36,6 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Обработка apiDeleteContact
       .addCase(apiDeleteContact.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -54,10 +52,18 @@ const contactsSlice = createSlice({
       }),
 });
 
-// Селекторы для получения данных из состояния
 export const selectContacts = (state) => state.contacts.items;
 export const selectLoading = (state) => state.contacts.loading;
 export const selectError = (state) => state.contacts.error;
 
-// Экспорт редьюсера
+export const selectFilteredContacts = createSelector(
+  [selectContacts, selectFilter],
+  (contacts, filter) => {
+    if (!filter) return contacts;
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  }
+);
+
 export default contactsSlice.reducer;

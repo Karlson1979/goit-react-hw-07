@@ -3,7 +3,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = "https://672909a06d5fa4901b6bebc8.mockapi.io";
 
-// Получение контактов
+
 export const apiGetContacts = createAsyncThunk(
   "contacts/fetchAll",
   async (_, thunkApi) => {
@@ -16,7 +16,6 @@ export const apiGetContacts = createAsyncThunk(
   }
 );
 
-// Добавление контакта
 export const apiAddContact = createAsyncThunk(
   "contacts/addContact",
   async (newContact, thunkApi) => {
@@ -29,7 +28,6 @@ export const apiAddContact = createAsyncThunk(
   }
 );
 
-// Удаление контакта
 export const apiDeleteContact = createAsyncThunk(
   "contacts/deleteContact",
   async (contactId, thunkApi) => {
